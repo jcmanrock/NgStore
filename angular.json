@@ -11,7 +11,8 @@
         },
         "@schematics/angular:component": {
           "skipTests": true,
-          "standalone": true
+          "standalone": true,
+          "changeDetection": "OnPush"
         },
         "@schematics/angular:directive": {
           "skipTests": true,
@@ -45,9 +46,7 @@
               "base": "dist/store"
             },
             "index": "src/index.html",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": [],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
@@ -63,10 +62,7 @@
             "security": {
               "allowedHosts": []
             },
-            "prerender": {
-              "discoverRoutes": false,
-              "routesFile": "routes.txt"
-            },
+            "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
             }
@@ -137,7 +133,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "tsconfig.spec.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],

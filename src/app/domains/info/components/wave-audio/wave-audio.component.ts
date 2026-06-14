@@ -7,6 +7,7 @@ import {
   inject,
   PLATFORM_ID,
   afterNextRender,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -16,6 +17,7 @@ import WaveSurfer from 'wavesurfer.js';
   selector: 'app-wave-audio',
   imports: [CommonModule],
   templateUrl: './wave-audio.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WaveAudioComponent {
   readonly audioUrl = input.required<string>();

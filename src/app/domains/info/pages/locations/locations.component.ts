@@ -1,5 +1,7 @@
 import {
   afterNextRender,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   effect,
   inject,
@@ -12,9 +14,11 @@ import type * as LeafletType from 'leaflet';
   selector: 'app-locations',
   imports: [],
   templateUrl: './locations.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LocationsComponent {
   private locationsService = inject(LocationsService);
+  private cdr = inject(ChangeDetectorRef);
   private map!: LeafletType.Map;
   private L!: typeof LeafletType;
 
@@ -28,7 +32,8 @@ export default class LocationsComponent {
 
   constructor() {
     afterNextRender(async () => {
-      const L = await import('leaflet');
+      const leaflet = await import('leaflet');
+      const L = leaflet.default ?? leaflet;
       this.L = L;
 
       const iconDefault = L.icon({
@@ -49,6 +54,8 @@ export default class LocationsComponent {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
       }).addTo(this.map);
+
+      this.cdr.detectChanges();
     });
 
     effect(() => {
